@@ -11,7 +11,7 @@ import Icon, {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, Input, Avatar } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PandaSvg from './pandaShape';
@@ -145,7 +145,7 @@ const LayoutComponent = ({ children }) => {
             <div>
               <Button type="primary">Support</Button>
               <Button type="primary" className="ml-2">
-                Login
+                <Link to="/login">Login</Link>
               </Button>
             </div>
           </div>
