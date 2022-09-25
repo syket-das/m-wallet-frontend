@@ -12,7 +12,15 @@ import Icon, {
 import { Button, Layout, Menu, Input, Avatar } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 import PandaSvg from './pandaShape';
+import {
+  changeNavigationHighlight,
+  changeNavigationLink,
+} from '../../redux/layout/navigationSlice';
+
+// ----------------------------------------------------------
 const { Header, Content, Footer, Sider } = Layout;
 const { Search } = Input;
 
@@ -26,35 +34,56 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem('General', 'sub1', <AppstoreOutlined />, [
+  getItem('General', 'general', <AppstoreOutlined />, [
     getItem('Dashboard', '1', <DashboardOutlined />),
     getItem('Categories', '2', <OrderedListOutlined />),
-    getItem('Transactions', '5', <DollarCircleOutlined />),
+    getItem('Transactions', '3', <DollarCircleOutlined />),
   ]),
 
-  getItem('Extras', 'sub2', <AlertOutlined />, [
-    getItem('Report', '6', <BugOutlined />),
-    getItem('Calendar', '7', <CalendarOutlined />),
-    getItem('Todo', '8', <EditOutlined />),
+  getItem('Extras', 'extras', <AlertOutlined />, [
+    getItem('Report', '4', <BugOutlined />),
+    getItem('Calendar', '5', <CalendarOutlined />),
+    getItem('Todo', '6', <EditOutlined />),
   ]),
 
-  getItem('Settings', '9', <SettingOutlined />),
+  getItem('Settings', '7', <SettingOutlined />),
 ];
 
 const LayoutComponent = ({ children }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // states--------------------------------------------------
   const [collapsed, setCollapsed] = useState(false);
-  const [current, setCurrent] = useState('1');
+  const current = useSelector((state) => state.navigation.hightlight);
+  const link = useSelector((state) => state.navigation.link);
+
+  useEffect(() => {
+    navigate(link);
+  }, [link, navigate]);
 
   const onClick = (e) => {
-    setCurrent(e.key);
-    console.log('click ', e);
     if (e.key === '1') {
-      navigate('/');
-      setCurrent('1');
+      dispatch(changeNavigationLink('/'));
+      dispatch(changeNavigationHighlight(e.key));
     } else if (e.key === '2') {
-      navigate('/categories')
-      setCurrent('2');
+      dispatch(changeNavigationLink('/categories'));
+      dispatch(changeNavigationHighlight(e.key));
+    } else if (e.key === '3') {
+      dispatch(changeNavigationLink('/transactions'));
+      dispatch(changeNavigationHighlight(e.key));
+    } else if (e.key === '4') {
+      dispatch(changeNavigationLink('/report'));
+      dispatch(changeNavigationHighlight(e.key));
+    } else if (e.key === '5') {
+      dispatch(changeNavigationLink('/calendar'));
+      dispatch(changeNavigationHighlight(e.key));
+    } else if (e.key === '6') {
+      dispatch(changeNavigationLink('/todo'));
+      dispatch(changeNavigationHighlight(e.key));
+    } else if (e.key === '7') {
+      dispatch(changeNavigationLink('/settings'));
+      dispatch(changeNavigationHighlight(e.key));
     }
   };
 
@@ -62,7 +91,7 @@ const LayoutComponent = ({ children }) => {
     if (window.innerWidth < 768) {
       setCollapsed(true);
     }
-  }, [window, collapsed]);
+  }, [collapsed]);
 
   return (
     <Layout
@@ -82,7 +111,7 @@ const LayoutComponent = ({ children }) => {
 
         <Menu
           theme="dark"
-          defaultSelectedKeys={[current]}
+          defaultOpenKeys={['general', 'extras']}
           mode="inline"
           items={items}
           onClick={onClick}
