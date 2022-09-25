@@ -66,7 +66,7 @@ const PieChart = () => {
      },
    },
  };
- return <Pie {...config} />;
+ return <Pie {...config}  />;
 }
 
 export default PieChart

@@ -14,3 +14,9 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-card-body {
+  /* padding: 0 !important; */
+
+  @apply p-0  !important;
+}

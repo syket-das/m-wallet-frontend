@@ -11,10 +11,10 @@ const Dashboard = () => {
       <LayoutComponent>
         <div className="m-5">
           <Row>
-            <Col sm={8}>
-              <div class=" p-10 flex flex-col space-y-3">
+            <Col sm={24} md={8}>
+              <div className=" lg:p-10 md:p-2 sm:p-2  flex flex-col space-y-3 h-full">
                 <div
-                  class="bg-blue-100 w-full h-full "
+                  className="bg-blue-100 w-full h-full "
                   style={{
                     display: 'flex',
                     // alignItems: 'center',
@@ -35,10 +35,10 @@ const Dashboard = () => {
                 </div>
               </div>
             </Col>
-            <Col sm={8}>
-              <div class=" p-10 flex flex-col space-y-3">
+            <Col sm={24} md={8}>
+              <div className=" lg:p-10 md:p-2 sm:p-2 flex flex-col space-y-3 h-full">
                 <div
-                  class="bg-blue-100 w-full h-full "
+                  className="bg-blue-100 w-full h-full "
                   style={{
                     display: 'flex',
                     // alignItems: 'center',
@@ -59,10 +59,10 @@ const Dashboard = () => {
                 </div>
               </div>
             </Col>
-            <Col sm={8}>
-              <div class=" p-10 flex flex-col space-y-3">
+            <Col sm={24} md={8}>
+              <div className=" lg:p-10 md:p-2 sm:p-2 flex flex-col space-y-3">
                 <div
-                  class="bg-blue-100 w-full h-full "
+                  className="bg-blue-100 w-full h-full "
                   style={{
                     display: 'flex',
                     // alignItems: 'center',
@@ -85,33 +85,50 @@ const Dashboard = () => {
             </Col>
           </Row>
           <Row>
-            <Col md={8}>
-              <div class=" p-10 flex flex-col space-y-3">
+            <Col md={8} sm={24}>
+              <div className=" lg:p-10 md:p-2 sm:p-2 flex flex-col space-y-3">
                 <Card
+                  className="bg-blue-5"
                   style={{
                     width: '100%',
+                    padding: '0px !important',
                   }}
                 >
+                  <div className="text-2xl font-bold text-center">
+                    Expence By Category
+                  </div>
                   <PieChart />
                 </Card>
               </div>
             </Col>
-            <Col md={16}>
-              <div class=" p-10 flex flex-col space-y-3">
+            <Col md={16} sm={24}>
+              <div className=" lg:p-10 md:p-2 sm:p-2 flex flex-col space-y-3">
                 <Card
                   style={{
+                    padding: 0,
                     width: '100%',
                   }}
                 >
+                  <div className="text-2xl font-bold text-center">
+                    Income vs Expence
+                  </div>
+
                   <LineChart />
                 </Card>
               </div>
             </Col>
           </Row>
           <Row>
-            <Col md={24}>
-              <div class=" p-10 flex flex-col space-y-3">
+            <Col md={24} sm={24}>
+              <div className=" lg:p-10 md:p-2 sm:p-2 flex flex-col space-y-3">
+              <Card>
+
+                <div className="text-2xl font-bold text-center">
+                  Recent Transcations
+                </div>
+
                 <RecentTranscations />
+              </Card>
               </div>
             </Col>
           </Row>

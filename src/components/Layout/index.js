@@ -9,12 +9,12 @@ import Icon, {
   OrderedListOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, Input, Card, Avatar } from 'antd';
-import React, { useState } from 'react';
+import { Button, Layout, Menu, Input, Avatar } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PandaSvg from './pandaShape';
 const { Header, Content, Footer, Sider } = Layout;
 const { Search } = Input;
-const { Meta } = Card;
 
 function getItem(label, key, icon, children) {
   return {
@@ -28,7 +28,7 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem('General', 'sub1', <AppstoreOutlined />, [
     getItem('Dashboard', '1', <DashboardOutlined />),
-    getItem('Categories', '4', <OrderedListOutlined />),
+    getItem('Categories', '2', <OrderedListOutlined />),
     getItem('Transactions', '5', <DollarCircleOutlined />),
   ]),
 
@@ -42,7 +42,28 @@ const items = [
 ];
 
 const LayoutComponent = ({ children }) => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const [current, setCurrent] = useState('1');
+
+  const onClick = (e) => {
+    setCurrent(e.key);
+    console.log('click ', e);
+    if (e.key === '1') {
+      navigate('/');
+      setCurrent('1');
+    } else if (e.key === '2') {
+      navigate('/categories')
+      setCurrent('2');
+    }
+  };
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setCollapsed(true);
+    }
+  }, [window, collapsed]);
+
   return (
     <Layout
       style={{
@@ -61,9 +82,11 @@ const LayoutComponent = ({ children }) => {
 
         <Menu
           theme="dark"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[current]}
           mode="inline"
           items={items}
+          onClick={onClick}
+          selectedKeys={[current]}
         />
       </Sider>
       <Layout className="site-layout">
@@ -110,7 +133,7 @@ const LayoutComponent = ({ children }) => {
             textAlign: 'center',
           }}
         >
-          Ant Design ©2018 Created by Ant UED
+          All Rights Reserved © 2022 | Syket Das
         </Footer>
       </Layout>
     </Layout>
