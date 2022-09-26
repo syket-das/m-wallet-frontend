@@ -9,6 +9,8 @@ import Calendar from './pages/Calendar';
 import Todo from './pages/Todo';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import AddCategory from './pages/AddCategory';
+import AddTransaction from './pages/AddTransaction';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <Route path="/todo" element={<Todo />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/categories/add" element={<AddCategory />} />
+      <Route path="/transactions/add" element={<AddTransaction />} />
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );

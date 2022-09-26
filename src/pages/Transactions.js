@@ -199,8 +199,11 @@ const Transactions = () => {
               </div>
             </div>
             <div>
-              <Button type="primary" ghost className="py-2.5">
-                Add Transaction
+              <Button type="primary" ghost className="py-2.5" onClick={()=>{
+                dispatch(changeNavigationHighlight('3'));
+                dispatch(changeNavigationLink('/transactions/add'));
+              }}>
+                <Link to="/transactions/add">Add Transaction</Link>
               </Button>
             </div>
           </Row>

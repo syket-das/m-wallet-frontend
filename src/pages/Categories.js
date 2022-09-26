@@ -1,6 +1,16 @@
 import React from 'react';
 import LayoutComponent from '../components/Layout';
-import { Table, Tag, Space, Row, Button, Col, Input, Breadcrumb, Empty } from 'antd';
+import {
+  Table,
+  Tag,
+  Space,
+  Row,
+  Button,
+  Col,
+  Input,
+  Breadcrumb,
+  Empty,
+} from 'antd';
 import {
   EditTwoTone,
   DeleteTwoTone,
@@ -9,7 +19,10 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeNavigationHighlight, changeNavigationLink } from '../redux/layout/navigationSlice';
+import {
+  changeNavigationHighlight,
+  changeNavigationLink,
+} from '../redux/layout/navigationSlice';
 
 const { TextArea } = Input;
 
@@ -116,8 +129,6 @@ const data = [
 
 const Categories = () => {
   const dispatch = useDispatch();
-  // const current = useSelector((state) => state.navigation.hightlight);
-  // const link = useSelector((state) => state.navigation.link);
 
   return (
     <LayoutComponent>
@@ -146,7 +157,15 @@ const Categories = () => {
             </div>
           </div>
           <div>
-            <Button type="primary" ghost className="py-2.5">
+            <Button
+              type="primary"
+              ghost
+              className="py-2.5"
+              onClick={() => {
+                dispatch(changeNavigationHighlight('2'));
+                dispatch(changeNavigationLink('/categories/add'));
+              }}
+            >
               Add Category
             </Button>
           </div>
@@ -168,9 +187,7 @@ const Categories = () => {
               maxLength={6}
               disabled
               style={{ height: '355px' }}
-            >
-            </TextArea>
-            
+            ></TextArea>
           </Col>
         </Row>
       </div>
