@@ -1,10 +1,12 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { loginWithEmailPass } from '../../firebase/auth/login';
 
 const Login = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
+    loginWithEmailPass(values.email, values.password);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -29,10 +31,10 @@ const Login = () => {
           <p className="form-title">Welcome back</p>
           <p>Login to the Dashboard</p>
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            name="email"
+            rules={[{ required: true, message: 'Please input your email!' }]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder="Email" />
           </Form.Item>
 
           <Form.Item

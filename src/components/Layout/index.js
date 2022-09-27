@@ -8,6 +8,7 @@ import Icon, {
   EditOutlined,
   OrderedListOutlined,
   SettingOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, Input, Avatar } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -19,6 +20,7 @@ import {
   changeNavigationHighlight,
   changeNavigationLink,
 } from '../../redux/layout/navigationSlice';
+import { logOut } from '../../firebase/auth/logOut';
 
 // ----------------------------------------------------------
 const { Header, Content, Footer, Sider } = Layout;
@@ -57,6 +59,7 @@ const LayoutComponent = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const current = useSelector((state) => state.navigation.hightlight);
   const link = useSelector((state) => state.navigation.link);
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     navigate(link);
@@ -144,9 +147,24 @@ const LayoutComponent = ({ children }) => {
 
             <div>
               <Button type="primary">Support</Button>
-              <Button type="primary" className="ml-2">
-                <Link to="/login">Login</Link>
-              </Button>
+              {!user?.email ? (
+                <Button type="primary" className="ml-2">
+                  <Link to="/login">Login</Link>
+                </Button>
+              ) : (
+                <span className=" mx-2">
+                  <span className="text-white mr-2">
+                    {user.email.split('@')[0]}
+                  </span>
+                  <Avatar
+                    size={40}
+                    icon={<UserOutlined />}
+                    onClick={() => {
+                      logOut();
+                    }}
+                  />
+                </span>
+              )}
             </div>
           </div>
         </Header>

@@ -1,10 +1,13 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { registerWithEmailPass } from '../../firebase/auth/register';
 
 const Register = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
+
+    return registerWithEmailPass(values.email, values.password, values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -50,12 +53,15 @@ const Register = () => {
           </Form.Item>
           <Form.Item
             name="confirmPassword"
-            rules={[{ required: true, message: 'Please input your confirm password!' }]}
+            rules={[
+              {
+                required: true,
+                message: 'Please input your confirm password!',
+              },
+            ]}
           >
             <Input.Password placeholder="Confirm Password" />
           </Form.Item>
-
-
 
           <Form.Item>
             <Button
@@ -68,7 +74,7 @@ const Register = () => {
           </Form.Item>
           <div className="login-footer">
             <p>
-             Already an account? <Link to="/login">Login</Link>
+              Already an account? <Link to="/login">Login</Link>
             </p>
           </div>
         </Form>
