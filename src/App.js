@@ -15,6 +15,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebaseConfig';
 import { useDispatch } from 'react-redux';
 import { userAvailable } from './redux/auth/userSlice';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +33,15 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" exact element={<Dashboard />} />
+      <Route
+        path="/"
+        exact
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/categories" element={<Categories />} />
       <Route path="/transactions" element={<Transactions />} />
       <Route path="/report" element={<Report />} />

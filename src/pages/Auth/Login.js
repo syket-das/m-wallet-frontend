@@ -1,9 +1,19 @@
 import { Button, Checkbox, Form, Input } from 'antd';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginWithEmailPass } from '../../firebase/auth/login';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { loading = false, user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user?.email) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   const onFinish = (values) => {
     console.log('Success:', values);
     loginWithEmailPass(values.email, values.password);
@@ -57,13 +67,12 @@ const Login = () => {
               LOGIN
             </Button>
           </Form.Item>
-        <div className="login-footer">
-          <p>
-            Don't have an account? <Link to="/register">Sign up</Link>
-          </p>
-        </div>
+          <div className="login-footer">
+            <p>
+              Don't have an account? <Link to="/register">Sign up</Link>
+            </p>
+          </div>
         </Form>
-
       </div>
     </div>
   );
