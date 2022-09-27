@@ -1,14 +1,17 @@
 import { Card, Col, Row } from 'antd';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import LineChart from '../components/chart/LineChart';
 import PieChart from '../components/chart/PieChart';
 import LayoutComponent from '../components/Layout';
 import RecentTranscations from '../components/RecentTranscations';
 
 const Dashboard = () => {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <div>
-      <LayoutComponent>
+      <LayoutComponent path={location.pathname}>
         <div className="m-5">
           <Row>
             <Col sm={24} md={8}>

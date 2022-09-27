@@ -12,15 +12,12 @@ import Icon, {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, Input, Avatar } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PandaSvg from './pandaShape';
-import {
-  changeNavigationHighlight,
-  changeNavigationLink,
-} from '../../redux/layout/navigationSlice';
-import { logOut } from '../../firebase/auth/logOut';
+
+import { logOut } from '../../firebase/auth/logout';
 
 // ----------------------------------------------------------
 const { Header, Content, Footer, Sider } = Layout;
@@ -29,6 +26,7 @@ const { Search } = Input;
 function getItem(label, key, icon, children) {
   return {
     key,
+
     icon,
     children,
     label,
@@ -51,50 +49,64 @@ const items = [
   getItem('Settings', '7', <SettingOutlined />),
 ];
 
-const LayoutComponent = ({ children }) => {
+const LayoutComponent = ({ children, path }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const location = useLocation();
 
   // states--------------------------------------------------
   const [collapsed, setCollapsed] = useState(false);
-  const current = useSelector((state) => state.navigation.hightlight);
-  const link = useSelector((state) => state.navigation.link);
+  const [current, setCurrent] = useState('1');
+  // const link = useSelector((state) => state.navigation.link);
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    navigate(link);
-  }, [link, navigate]);
-
-  const onClick = (e) => {
-    if (e.key === '1') {
-      dispatch(changeNavigationLink('/'));
-      dispatch(changeNavigationHighlight(e.key));
-    } else if (e.key === '2') {
-      dispatch(changeNavigationLink('/categories'));
-      dispatch(changeNavigationHighlight(e.key));
-    } else if (e.key === '3') {
-      dispatch(changeNavigationLink('/transactions'));
-      dispatch(changeNavigationHighlight(e.key));
-    } else if (e.key === '4') {
-      dispatch(changeNavigationLink('/report'));
-      dispatch(changeNavigationHighlight(e.key));
-    } else if (e.key === '5') {
-      dispatch(changeNavigationLink('/calendar'));
-      dispatch(changeNavigationHighlight(e.key));
-    } else if (e.key === '6') {
-      dispatch(changeNavigationLink('/todo'));
-      dispatch(changeNavigationHighlight(e.key));
-    } else if (e.key === '7') {
-      dispatch(changeNavigationLink('/settings'));
-      dispatch(changeNavigationHighlight(e.key));
+    if (location.pathname === '/') {
+      setCurrent('1');
+    } else if (
+      location.pathname === '/categories' ||
+      location.pathname === '/categories/add'
+    ) {
+      setCurrent('2');
+    } else if (
+      location.pathname === '/transactions' ||
+      location.pathname === '/transactions/add'
+    ) {
+      setCurrent('3');
+    } else if (location.pathname === '/report') {
+      setCurrent('4');
+    } else if (location.pathname === '/calendar') {
+      setCurrent('5');
+    } else if (location.pathname === '/todo') {
+      setCurrent('6');
+    } else if (location.pathname === '/settings') {
+      setCurrent('7');
     }
-  };
+  }, [location.pathname]);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
       setCollapsed(true);
     }
   }, [collapsed]);
+
+  const onClick = (e) => {
+    if (e.key === '1') {
+      navigate('/');
+    } else if (e.key === '2') {
+      navigate('/categories');
+    } else if (e.key === '3') {
+      navigate('/transactions');
+    } else if (e.key === '4') {
+      navigate('/report');
+    } else if (e.key === '5') {
+      navigate('/calendar');
+    } else if (e.key === '6') {
+      navigate('/todo');
+    } else if (e.key === '7') {
+      navigate('/settings');
+    }
+  };
 
   return (
     <Layout

@@ -38,7 +38,7 @@ function App() {
         exact
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Dashboard  />
           </ProtectedRoute>
         }
       />

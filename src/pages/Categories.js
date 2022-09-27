@@ -17,12 +17,8 @@ import {
   PlusCircleTwoTone,
   MinusCircleTwoTone,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  changeNavigationHighlight,
-  changeNavigationLink,
-} from '../redux/layout/navigationSlice';
 
 const { TextArea } = Input;
 
@@ -128,7 +124,7 @@ const data = [
 ];
 
 const Categories = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <LayoutComponent>
@@ -143,8 +139,7 @@ const Categories = () => {
                   <Link
                     to="/"
                     onClick={() => {
-                      dispatch(changeNavigationHighlight('1'));
-                      dispatch(changeNavigationLink('/'));
+                      navigate('/');
                     }}
                   >
                     Home
@@ -162,8 +157,7 @@ const Categories = () => {
               ghost
               className="py-2.5"
               onClick={() => {
-                dispatch(changeNavigationHighlight('2'));
-                dispatch(changeNavigationLink('/categories/add'));
+                navigate('/categories/add');
               }}
             >
               Add Category

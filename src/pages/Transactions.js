@@ -4,12 +4,8 @@ import TextArea from 'antd/lib/input/TextArea';
 import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LayoutComponent from '../components/Layout';
-import {
-  changeNavigationHighlight,
-  changeNavigationLink,
-} from '../redux/layout/navigationSlice';
 
 const data = [
   {
@@ -42,7 +38,7 @@ const Transactions = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -185,8 +181,7 @@ const Transactions = () => {
                     <Link
                       to="/"
                       onClick={() => {
-                        dispatch(changeNavigationHighlight('1'));
-                        dispatch(changeNavigationLink('/'));
+                        navigate('/');
                       }}
                     >
                       Home
@@ -200,8 +195,7 @@ const Transactions = () => {
             </div>
             <div>
               <Button type="primary" ghost className="py-2.5" onClick={()=>{
-                dispatch(changeNavigationHighlight('3'));
-                dispatch(changeNavigationLink('/transactions/add'));
+                navigate('/transactions/add')
               }}>
                 <Link to="/transactions/add">Add Transaction</Link>
               </Button>
